@@ -1,0 +1,18 @@
+/* ���� CSS �������ڴ洢��ͬģʽ�µ�ͼ��·�� */
+:root {
+    --gitee-icon-url: url('/images/giteeLight.svg'); /* Ĭ�ϰ���ģʽͼ��·�� */
+}
+
+[data-theme='dark'] {
+    --gitee-icon-url: url('/images/giteeDark.svg'); /* �ڰ�ģʽͼ��·�� */
+}
+
+/* Ϊ���Զ���� Gitee ͼ����������ʽ */
+.local-icon-gitee {
+    display: inline-block;
+    width: 1em; /* �������罻ͼ�걣�ִ�Сһ�� */
+    height: 1em;
+    background: var(--gitee-icon-url) center/contain no-repeat;
+    /* ������ʽ��ȷ��ͼ�������ֻ��߶��룬���ֺ�����ͼ��һ�� */
+    vertical-align: -0.125em;
+}
