@@ -24042,6 +24042,197 @@ div#swiper_container:hover {
   color: var(--anzhiyu-white);
 }
 
+/* ============================================================================
+ * Ianz 主页 · 视觉增强层
+ * ----------------------------------------------------------------------------
+ * 为什么加在**这个文件**：
+ *   主题的 index.styl 用通配方式引入 `_extra` 下的 css，本文件
+ *   （`source/css/_extra/ianz-enhance.css`）会被打包进产物。
+ *   实测：`_extra/anzhiyu/custom.css` 的 16/16 个选择器都出现在
+ *   `public/css/index.css` 里；而 `source/css/custom.css` **不会**被打包
+ *   （0/1 命中）—— 写那里不生效。
+ *
+ * ⚠️ 写注释时的坑（本文件第一版就踩了）：
+ *   CSS 注释不支持嵌套。在注释里写 glob 通配（下划线 extra 后跟斜杠星号）
+ *   会**提前闭合注释**，导致后面的文字变成 CSS 代码、解析报错。
+ *   所以这里描述 glob 时一律不写那个字符组合。
+ *
+ * 设计原则（避免"美化"变成"改坏"）：
+ *   1. **只做叠加**，不改主题既有选择器的行为；需要覆盖时用更具体的选择器，
+ *      尽量少用 `!important`（只在主题用了内联样式或 !important 时才用）。
+ *   2. 颜色一律走主题已有的 CSS 变量（`--anzhiyu-*`），这样**白天/夜间模式自动跟随**，
+ *      不会出现"夜里一片白"。
+ *   3. 每个小节用横线分隔，便于整体回退或逐段删除。
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * 1. 排版：中文字体栈 + 正文可读性
+ * ------------------------------------------------------------------------ */
+:root {
+  /* 中文优先的字体栈：系统字体 → 常见中文字体，避免默认字体在 Windows 上
+     中文回退到宋体（观感突兀）。*/
+  --ianz-font-stack: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei",
+    "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans CJK SC",
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ianz-mono-stack: "JetBrains Mono", "Cascadia Code", "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
+  /* 正文行高与段落间距：默认偏紧，中文长文读起来累 */
+  --ianz-reading-line-height: 1.85;
+  --ianz-card-radius: 14px;
+}
+
+body,
+.card-widget,
+#article-container,
+.recent-post-info,
+.author-content-item {
+  font-family: var(--ianz-font-stack);
+}
+
+#article-container {
+  line-height: var(--ianz-reading-line-height);
+  letter-spacing: 0.01em;
+}
+
+/* 段落之间留白，避免中文长段落糊成一坨 */
+#article-container p {
+  margin: 0 0 1.05em;
+}
+
+/* 代码用等宽字体栈，并略微收紧行高（代码不需要 1.85 那么松） */
+#article-container code,
+#article-container pre,
+#article-container kbd {
+  font-family: var(--ianz-mono-stack);
+}
+
+#article-container pre {
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------------
+ * 2. 卡片质感：统一圆角 + 更柔和的层次投影
+ *    主题各处的圆角/投影值不统一（8px/12px 混用），这里收敛成一套。
+ * ------------------------------------------------------------------------ */
+#recent-posts .recent-post-item,
+.card-widget,
+#page,
+#archive,
+#tag,
+#category,
+div#post,
+.author-content-item {
+  border-radius: var(--ianz-card-radius);
+}
+
+/* 投影：用"两层"（近处细影 + 远处大影）比单层更像真卡片 */
+#recent-posts .recent-post-item,
+.card-widget {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 24px -8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+/* hover 时轻微抬起（不改变尺寸，避免布局抖动） */
+#recent-posts .recent-post-item:hover,
+.card-widget:hover {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 14px 32px -10px rgba(0, 0, 0, 0.16);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] #recent-posts .recent-post-item,
+[data-theme="dark"] .card-widget {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 8px 24px -8px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------------------------------------------------------------------------
+ * 3. 标题层次：让 h2/h3 有清晰的视觉分隔
+ * ------------------------------------------------------------------------ */
+#article-container h2 {
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--anzhiyu-theme-op);
+}
+
+#article-container h2::before,
+#article-container h3::before {
+  /* 主题已提供图标，这里只统一颜色，跟随主色 */
+  color: var(--anzhiyu-main);
+}
+
+/* ---------------------------------------------------------------------------
+ * 4. 链接与按钮：hover 反馈更明确
+ * ------------------------------------------------------------------------ */
+#article-container a:not(.headerlink):not(.btn-anzhiyu) {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* ---------------------------------------------------------------------------
+ * 5. 首页顶部横幅：文字可读性
+ *    背景图深浅不定，纯白字在某些图上会糊；加一层轻投影保证可读。
+ * ------------------------------------------------------------------------ */
+#page-header .title,
+#page-header #site-title,
+#page-header #site-subtitle {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------------------------------------------------------------------------
+ * 6. 滚动条：跟随主题色，别用系统默认的灰
+ * ------------------------------------------------------------------------ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--anzhiyu-main);
+  border-radius: 8px;
+  opacity: 0.7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--anzhiyu-main);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+ * 7. 移动端：小屏下收紧内边距，避免两侧空白过多
+ * ------------------------------------------------------------------------ */
+@media screen and (max-width: 768px) {
+  #article-container {
+    line-height: 1.75;
+  }
+
+  #recent-posts .recent-post-item,
+  .card-widget {
+    border-radius: 12px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * 8. 无障碍：尊重"减少动效"偏好
+ *    （WCAG 2.3.3 —— 前庭功能障碍用户对入场动画敏感）
+ * ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  #recent-posts .recent-post-item,
+  .card-widget,
+  .animate__animated,
+  .author-content-item,
+  #page > div:not(.author-content-item) {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 #local-search .search-dialog .local-search__hit-item:before {
   content: none !important;
 }

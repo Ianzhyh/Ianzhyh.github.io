@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# 不该被索引的
+Disallow: /404.html
+Disallow: /comments/
+
+Sitemap: https://ianzhyh.github.io/sitemap.xml
