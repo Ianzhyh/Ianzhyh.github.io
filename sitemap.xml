@@ -6,6 +6,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ianzhyh.github.io/2026/10/14/melodix-intro/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ianzhyh.github.io/2026/10/14/workbuddy-to-dsh-guide/</loc>
     <lastmod>2026-10-14</lastmod>
     <priority>0.8</priority>
@@ -81,6 +86,11 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://ianzhyh.github.io/tags/前端/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://ianzhyh.github.io/tags/工具/</loc>
     <lastmod>2026-10-14</lastmod>
     <priority>0.5</priority>
@@ -92,6 +102,11 @@
   </url>
   <url>
     <loc>https://ianzhyh.github.io/tags/教程/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ianzhyh.github.io/tags/桌面应用/</loc>
     <lastmod>2026-10-14</lastmod>
     <priority>0.5</priority>
   </url>
