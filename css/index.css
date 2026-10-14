@@ -23168,6 +23168,10 @@ a.categoryButton.red {
   background: linear-gradient(to right, #f65, #ffbf37);
   background-size: 200%;
 }
+a.categoryButton.purple {
+  background: linear-gradient(to right, #7f5dff, #c86bff);
+  background-size: 200%;
+}
 a.categoryButton.green {
   background: linear-gradient(to right, #18e7ae, #1eebeb);
   background-size: 200%;
@@ -23210,6 +23214,10 @@ a.categoryButton:after {
 }
 [data-theme="dark"] a.categoryButton.red {
   background: linear-gradient(to right, #e22a16, #da980c);
+  background-size: 200%;
+}
+[data-theme="dark"] a.categoryButton.purple {
+  background: linear-gradient(to right, #5a34b8, #8f4bd8);
   background-size: 200%;
 }
 [data-theme="dark"] a.categoryButton.green {

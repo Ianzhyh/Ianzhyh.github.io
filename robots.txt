@@ -5,4 +5,4 @@ Allow: /
 Disallow: /404.html
 Disallow: /comments/
 
-Sitemap: https://ianzhyh.github.io/sitemap.xml
+Sitemap: https://ianzh.cn/sitemap.xml
